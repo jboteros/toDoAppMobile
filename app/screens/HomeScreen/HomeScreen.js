@@ -11,7 +11,6 @@ import {
 import { SafeAreaView } from "@/navigation";
 import { Text, ToDoItem } from "@/components";
 import { colors } from "@/styles";
-
 import { MagnifierIcon } from "./MagnifierIcon.svg.js";
 
 const MOCK_ITEMS = [
@@ -63,7 +62,7 @@ const MOCK_ITEMS = [
     body: "Complete this test and update the content",
     isDone: false,
   },
-    {
+  {
     id: "9",
     title: "Meeting with Mr Jonas",
     body: "Complete this test and update the content",

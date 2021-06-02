@@ -42,7 +42,7 @@ export function Text({ style, ...props }: Props): React$Element<any> {
   return <RNText style={[styles.text, style]} {...props} />;
 }
 
-export const withDefaultStyle =
+const withDefaultStyle =
   (defaultStyle: any) =>
   (Component: any) =>
   ({ style, ...props }: Props) =>

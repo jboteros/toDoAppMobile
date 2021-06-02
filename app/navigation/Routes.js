@@ -1,13 +1,7 @@
 // @flow
-import React, { useRef, useContext, useState, useEffect } from "react";
-import { useColorScheme } from "react-native";
-import {
-  NavigationContainer,
-  DefaultTheme,
-  DarkTheme,
-} from "@react-navigation/native";
+import React, { useRef } from "react";
+import { NavigationContainer } from "@react-navigation/native";
 
-import { colors } from "@/styles";
 import { routes } from "@/navigation";
 
 import { HomeScreen } from "@/screens/HomeScreen";

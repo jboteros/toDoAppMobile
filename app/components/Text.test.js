@@ -1,6 +1,6 @@
 // @flow
 
-import { normalize, withDefaultStyle } from "./Text";
+import { normalize } from "./Text";
 
 describe("normalize text", () => {
   it("normalize text 10 expect 18", () => {

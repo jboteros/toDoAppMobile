@@ -1,8 +1,8 @@
 //@flow
-import React, { type ElementConfig } from "react";
+import React from "react";
 import { TouchableOpacity, StyleSheet } from "react-native";
 import { Text } from "@/components";
-import { sizes, colors } from "@/styles";
+import { colors } from "@/styles";
 
 type Props = {|
   item: {| id: string, isDone: boolean, title: string, body: string |},
