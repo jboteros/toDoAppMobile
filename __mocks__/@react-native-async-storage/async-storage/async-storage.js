@@ -1,39 +1,38 @@
-let db = {};
+const items = {};
 
-export default {
-  setItem: (item, value) => {
-    return new Promise((resolve, reject) => {
-      db[item] = value;
-      resolve(value);
-    });
+jest.mock("react-native", () => ({
+  AsyncStorage: {
+    setItem: jest.fn((item, value) => {
+      return new Promise((resolve, reject) => {
+        items[item] = value;
+        resolve(value);
+      });
+    }),
+    multiSet: jest.fn((item, value) => {
+      return new Promise((resolve, reject) => {
+        items[item] = value;
+        resolve(value);
+      });
+    }),
+    getItem: jest.fn((item, value) => {
+      return new Promise((resolve, reject) => {
+        resolve(items[item]);
+      });
+    }),
+    multiGet: jest.fn((item) => {
+      return new Promise((resolve, reject) => {
+        resolve(items[item]);
+      });
+    }),
+    removeItem: jest.fn((item) => {
+      return new Promise((resolve, reject) => {
+        resolve(delete items[item]);
+      });
+    }),
+    getAllKeys: jest.fn((items) => {
+      return new Promise((resolve) => {
+        resolve(items.keys());
+      });
+    }),
   },
-  multiSet: (item, fun) => {
-    return new Promise((resolve, reject) => {
-      for (let index = 0; index < item.length; index++) {
-        db[item[index][0]] = item[index][1];
-      }
-      fun();
-      resolve(value);
-    });
-  },
-  getItem: (item, value = null) => {
-    return new Promise((resolve, reject) => {
-      resolve(db[item]);
-    });
-  },
-  multiGet: (item) => {
-    return new Promise((resolve, reject) => {
-      resolve(db[item]);
-    });
-  },
-  removeItem: (item) => {
-    return new Promise((resolve, reject) => {
-      resolve(delete db[item]);
-    });
-  },
-  getAllKeys: (db) => {
-    return new Promise((resolve) => {
-      resolve(db.keys());
-    });
-  },
-};
+}));
