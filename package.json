@@ -3,27 +3,74 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
+    "clean-all": "rm -rf node_modules/ && yarn cache clean && watchman watch-del-all",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
+    "flow": "flow",
     "test": "jest",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "lintAll": "eslint . && prettier -l \"**/*.js\"",
+    "pod": "cd ios && pod install",
+    "xcode": "xed -b ios",
+    "postinstall": "patch-package",
+    "schema": "apollo schema:download --endpoint https://rested-mackerel-10.hasura.app/v1/graphql",
+    "fragments": "node downloadFragmentTypes.js --endpoint https://rested-mackerel-10.hasura.app/v1/graphql",
+    "generate": "apollo codegen:generate --localSchemaFile=schema.json --target flow --queries \"app/**/*\" --passthroughCustomScalars --useReadOnlyTypes --customScalarsPrefix=GraphQLScalar"
   },
   "dependencies": {
+    "@expo/react-native-action-sheet": "^3.9.0",
+    "@react-native-community/masked-view": "^0.1.11",
+    "@react-navigation/native": "^5.9.4",
+    "@react-navigation/stack": "^5.14.5",
     "react": "17.0.1",
-    "react-native": "0.64.1"
+    "react-native": "0.64.1",
+    "react-native-gesture-handler": "^1.10.3",
+    "react-native-reanimated": "^2.2.0",
+    "react-native-safe-area-context": "^3.2.0",
+    "react-native-screens": "^3.3.0",
+    "react-native-svg": "^12.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.14.3",
+    "@babel/plugin-proposal-export-default-from": "^7.12.13",
+    "@babel/plugin-proposal-export-namespace-from": "^7.14.2",
     "@babel/runtime": "^7.14.0",
+    "@jest/create-cache-key-function": "^27.0.2",
     "@react-native-community/eslint-config": "^2.0.0",
     "babel-jest": "^27.0.2",
+    "babel-plugin-module-resolver": "^4.1.0",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
     "eslint": "^7.27.0",
+    "eslint-plugin-import": "^2.23.4",
+    "flow-bin": "^0.122.0",
     "jest": "^27.0.3",
     "metro-react-native-babel-preset": "^0.66.0",
     "react-test-renderer": "17.0.1"
   },
   "jest": {
-    "preset": "react-native"
+    "preset": "react-native",
+    "verbose": true,
+    "transformIgnorePatterns": [
+      "/node_modules/(?!@)/"
+    ],
+    "collectCoverage": true,
+    "coverageReporters": [
+      "json",
+      "lcov",
+      "text"
+    ],
+    "coverageDirectory": "test-coverage",
+    "coverageThreshold": {
+      "global": {
+        "branches": 0,
+        "functions": 0,
+        "lines": 0,
+        "statements": 0
+      }
+    },
+    "setupFilesAfterEnv": [
+      "<rootDir>/jest-config/setup.js"
+    ]
   }
 }
