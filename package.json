@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "@expo/react-native-action-sheet": "^3.9.0",
+    "@react-native-async-storage/async-storage": "^1.15.5",
     "@react-native-community/masked-view": "^0.1.11",
     "@react-navigation/native": "^5.9.4",
     "@react-navigation/stack": "^5.14.5",
@@ -70,7 +71,8 @@
       }
     },
     "setupFilesAfterEnv": [
-      "<rootDir>/jest-config/setup.js"
+      "<rootDir>/jest-config/setup.js",
+      "<rootDir>/jest-config/setupAsyncStorage.js"
     ]
   }
 }
