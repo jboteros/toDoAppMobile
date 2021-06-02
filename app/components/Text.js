@@ -14,27 +14,27 @@ const styles = StyleSheet.create({
     color: colors.dark,
   },
   headline1: {
-    fontSize: normalize(44),
+    fontSize: normalize(44, NORMALIZE_FONTS),
     fontWeight: "bold",
   },
   headline2: {
     fontWeight: "600",
-    fontSize: normalize(32),
+    fontSize: normalize(32, NORMALIZE_FONTS),
     letterSpacing: 0.25,
   },
   headline3: {
     fontWeight: "bold",
-    fontSize: normalize(26),
+    fontSize: normalize(26, NORMALIZE_FONTS),
   },
   headline4: {
     fontWeight: "600",
-    fontSize: normalize(20),
+    fontSize: normalize(20, NORMALIZE_FONTS),
     letterSpacing: 0.15,
   },
   subtitle: {
-    fontSize: normalize(16),
+    fontSize: normalize(16, NORMALIZE_FONTS),
     letterSpacing: 0.15,
-    lineHeight: normalize(18),
+    lineHeight: normalize(18, NORMALIZE_FONTS),
   },
 });
 
@@ -42,7 +42,7 @@ export function Text({ style, ...props }: Props): React$Element<any> {
   return <RNText style={[styles.text, style]} {...props} />;
 }
 
-const withDefaultStyle =
+export const withDefaultStyle =
   (defaultStyle: any) =>
   (Component: any) =>
   ({ style, ...props }: Props) =>
@@ -55,13 +55,15 @@ Text.H4 = withDefaultStyle(styles.headline4)(Text);
 
 Text.Subtitle = withDefaultStyle(styles.subtitle)(Text);
 
-export function normalize(size: number) {
-  if (NORMALIZE_FONTS) {
+export function normalize(size: number, normalize: boolean) {
+  if (normalize) {
     const newSize = size * SCALE;
     if (Platform.OS === "ios") {
       return Math.round(PixelRatio.roundToNearestPixel(newSize));
     } else {
       return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2;
     }
+  } else {
+    return size;
   }
 }

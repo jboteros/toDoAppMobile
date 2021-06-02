@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">94.44% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>17/18</span>
+                <span class='fraction'>19/19</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>2/4</span>
+                <span class='fraction'>4/4</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">94.44% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>17/18</span>
+                <span class='fraction'>19/19</span>
             </div>
         
             
@@ -124,7 +124,9 @@
 <a name='L65'></a><a href='#L65'>65</a>
 <a name='L66'></a><a href='#L66'>66</a>
 <a name='L67'></a><a href='#L67'>67</a>
-<a name='L68'></a><a href='#L68'>68</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L68'></a><a href='#L68'>68</a>
+<a name='L69'></a><a href='#L69'>69</a>
+<a name='L70'></a><a href='#L70'>70</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -182,13 +184,15 @@
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">14x</span>
-<span class="cline-any cline-yes">14x</span>
-<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-yes">20x</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-yes">16x</span>
 <span class="cline-any cline-yes">14x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">// @flow
@@ -207,27 +211,27 @@ const styles = StyleSheet.create({
     color: colors.dark,
   },
   headline1: {
-    fontSize: normalize(44),
+    fontSize: normalize(44, NORMALIZE_FONTS),
     fontWeight: "bold",
   },
   headline2: {
     fontWeight: "600",
-    fontSize: normalize(32),
+    fontSize: normalize(32, NORMALIZE_FONTS),
     letterSpacing: 0.25,
   },
   headline3: {
     fontWeight: "bold",
-    fontSize: normalize(26),
+    fontSize: normalize(26, NORMALIZE_FONTS),
   },
   headline4: {
     fontWeight: "600",
-    fontSize: normalize(20),
+    fontSize: normalize(20, NORMALIZE_FONTS),
     letterSpacing: 0.15,
   },
   subtitle: {
-    fontSize: normalize(16),
+    fontSize: normalize(16, NORMALIZE_FONTS),
     letterSpacing: 0.15,
-    lineHeight: normalize(18),
+    lineHeight: normalize(18, NORMALIZE_FONTS),
   },
 });
 &nbsp;
@@ -235,7 +239,7 @@ export function Text({ style, ...props }: Props): React$Element&lt;any&gt; {
   return &lt;RNText style={[styles.text, style]} {...props} /&gt;;
 }
 &nbsp;
-const withDefaultStyle =
+export const withDefaultStyle =
   (defaultStyle: any) =&gt;
   (Component: any) =&gt;
   ({ style, ...props }: Props) =&gt;
@@ -248,14 +252,16 @@ Text.H4 = withDefaultStyle(styles.headline4)(Text);
 &nbsp;
 Text.Subtitle = withDefaultStyle(styles.subtitle)(Text);
 &nbsp;
-export function normalize(size: number) {
-  <span class="missing-if-branch" title="else path not taken" >E</span>if (NORMALIZE_FONTS) {
+export function normalize(size: number, normalize: boolean) {
+  if (normalize) {
     const newSize = size * SCALE;
-    <span class="missing-if-branch" title="else path not taken" >E</span>if (Platform.OS === "ios") {
+    if (Platform.OS === "ios") {
       return Math.round(PixelRatio.roundToNearestPixel(newSize));
     } else {
-<span class="cstat-no" title="statement not covered" >      return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2;</span>
+      return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2;
     }
+  } else {
+    return size;
   }
 }
 &nbsp;</pre></td></tr></table></pre>
@@ -265,7 +271,7 @@ export function normalize(size: number) {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Wed Jun 02 2021 02:13:13 GMT-0500 (Colombia Standard Time)
+                at Wed Jun 02 2021 09:34:14 GMT-0500 (Colombia Standard Time)
             </div>
         </div>
         <script src="../prettify.js"></script>
