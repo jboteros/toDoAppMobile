@@ -8,95 +8,79 @@ import {
   StyleSheet,
   TextInput,
 } from "react-native";
-import { SafeAreaView } from "@/navigation";
+import { SafeAreaView, routes, useNavigation } from "@/navigation";
 import { Text, ToDoItem } from "@/components";
 import { colors } from "@/styles";
 import { MagnifierIcon } from "./MagnifierIcon.svg.js";
+import { EmptyList } from "./EmptyList.svg.js";
 
-const MOCK_ITEMS = [
-  {
-    id: "1",
-    title: "Task",
-    body: "New task",
-    isDone: false,
-  },
-  {
-    id: "2",
-    title: "Meeting with Mr Jonas",
-    body: "Complete this test and update the content",
-    isDone: false,
-  },
-  {
-    id: "3",
-    title: "Meeting with Mr Jonas",
-    body: "This test and update the content",
-    isDone: false,
-  },
-  {
-    id: "4",
-    title: "Meeting with Mr Jonas",
-    body: "Complete this test and update the content",
-    isDone: false,
-  },
-  {
-    id: "5",
-    title: "Meeting with Mr Jonas",
-    body: "Complete this test and update the content",
-    isDone: false,
-  },
-  {
-    id: "6",
-    title: "Meeting with Mr Jonas",
-    body: "Complete this test and update the content",
-    isDone: false,
-  },
-  {
-    id: "7",
-    title: "Meeting with Mr Jonas",
-    body: "Complete this test and update the content",
-    isDone: false,
-  },
-  {
-    id: "8",
-    title: "Meeting with Mr Jonas",
-    body: "Complete this test and update the content",
-    isDone: false,
-  },
-  {
-    id: "9",
-    title: "Meeting with Mr Jonas",
-    body: "Complete this test and update the content",
-    isDone: false,
-  },
-  {
-    id: "10",
-    title: "Meeting with Mr Jonas",
-    body: "Complete this test and update the content",
-    isDone: false,
-  },
-  {
-    id: "11",
-    title: "Meeting with Mr Jonas",
-    body: "Complete this test and update the content",
-    isDone: false,
-  },
-];
 const ADD_BORDER_RADIUS = 20;
 
 export function HomeScreen() {
+  const navigation = useNavigation();
+
   const [filterValue, setFilterValue] = useState("");
   const [filterIndex, setFilterIndex] = useState(0);
 
+  const [taskList, setTaskList] = useState([]);
+
   const filteredItems = useMemo(() => {
-    return MOCK_ITEMS.filter(
-      ({ title, body }) =>
+    let data = [];
+
+    if (filterIndex === 0) {
+      data = taskList;
+    } else if (filterIndex === 1) {
+      data = taskList.filter(({ isDone }) => isDone === false);
+    } else if (filterIndex === 2) {
+      data = taskList.filter(({ isDone }) => isDone === true);
+    }
+
+    return data.filter(
+      ({ title, body, isDone }) =>
         body.includes(filterValue) || title.includes(filterValue),
     );
-  }, [filterValue]);
+  }, [filterIndex, filterValue, taskList]);
 
-  const handleSelectItem = useCallback(async () => {
-    console.log("handleSelectItem");
+  const handleAddItem = useCallback(
+    async (item) => {
+      setTaskList([item, ...taskList]);
+    },
+    [taskList],
+  );
+
+  const handleRemoveItem = useCallback(
+    async (id) => {
+      const data = taskList.filter((item) => item.id !== id);
+      setTaskList(data);
+    },
+    [taskList],
+  );
+
+  const handleLoadMockData = useCallback(async (data) => {
+    setTaskList(data);
   }, []);
+
+  const handleClearData = useCallback(() => {
+    setTaskList([]);
+  }, []);
+
+  const handleToggleTask = useCallback(
+    (id) => {
+      const data = taskList.map((item) =>
+        item.id === id ? { ...item, isDone: !item.isDone } : item,
+      );
+      setTaskList(data);
+    },
+    [taskList],
+  );
+
+  const handleAddTask = useCallback(() => {
+    navigation.navigate(routes.ADD_TASK, {
+      handleAddItem,
+      handleLoadMockData,
+      handleClearData,
+    });
+  }, [handleAddItem, handleClearData, handleLoadMockData, navigation]);
 
   return (
     <View style={styles.container}>
@@ -110,7 +94,8 @@ export function HomeScreen() {
               flexDirection: "row",
             }}>
             <Text.H1>Task</Text.H1>
-            <View
+            <TouchableOpacity
+              onPress={handleAddTask}
               style={{
                 width: 40,
                 height: 40,
@@ -134,7 +119,7 @@ export function HomeScreen() {
               <Text.H2 style={{ lineHeight: 32, color: colors.light }}>
                 +
               </Text.H2>
-            </View>
+            </TouchableOpacity>
           </View>
           <View style={styles.inputContainer}>
             <MagnifierIcon />
@@ -196,11 +181,28 @@ export function HomeScreen() {
           </View>
         </View>
         <View style={{ paddingHorizontal: 20 }}>
-          {filteredItems.filter(Boolean).map((item) => {
-            return (
-              <ToDoItem key={item.id} item={item} onPress={handleSelectItem} />
-            );
-          })}
+          {filteredItems.length > 0 ? (
+            filteredItems.filter(Boolean).map((item) => {
+              return (
+                <ToDoItem
+                  key={item.id}
+                  item={item}
+                  onPress={handleToggleTask}
+                  onRemovePress={handleRemoveItem}
+                />
+              );
+            })
+          ) : (
+            <View
+              style={{
+                flex: 1,
+                justifyContent: "center",
+                alignItems: "center",
+              }}>
+              <EmptyList />
+              <Text>Your list is empty.</Text>
+            </View>
+          )}
         </View>
       </ScrollView>
     </View>

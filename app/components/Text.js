@@ -31,6 +31,11 @@ const styles = StyleSheet.create({
     fontSize: normalize(20, NORMALIZE_FONTS),
     letterSpacing: 0.15,
   },
+  headline5: {
+    fontWeight: "600",
+    fontSize: normalize(18, NORMALIZE_FONTS),
+    letterSpacing: 0.15,
+  },
   subtitle: {
     fontSize: normalize(16, NORMALIZE_FONTS),
     letterSpacing: 0.15,
@@ -52,6 +57,7 @@ Text.H1 = withDefaultStyle(styles.headline1)(Text);
 Text.H2 = withDefaultStyle(styles.headline2)(Text);
 Text.H3 = withDefaultStyle(styles.headline3)(Text);
 Text.H4 = withDefaultStyle(styles.headline4)(Text);
+Text.H5 = withDefaultStyle(styles.headline5)(Text);
 
 Text.Subtitle = withDefaultStyle(styles.subtitle)(Text);
 

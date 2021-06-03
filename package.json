@@ -30,7 +30,8 @@
     "react-native-reanimated": "^2.2.0",
     "react-native-safe-area-context": "^3.2.0",
     "react-native-screens": "^3.3.0",
-    "react-native-svg": "^12.1.1"
+    "react-native-svg": "^12.1.1",
+    "react-native-uuid": "^2.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.14.3",
@@ -47,7 +48,8 @@
     "flow-bin": "^0.122.0",
     "jest": "^27.0.3",
     "metro-react-native-babel-preset": "^0.66.0",
-    "react-test-renderer": "17.0.1"
+    "react-test-renderer": "17.0.1",
+    "regenerator-runtime": "^0.13.7"
   },
   "jest": {
     "preset": "react-native",
