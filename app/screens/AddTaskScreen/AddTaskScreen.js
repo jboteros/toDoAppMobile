@@ -5,20 +5,21 @@ import { View, TouchableOpacity, TextInput, StyleSheet } from "react-native";
 import { Text } from "@/components";
 import { useNavigation } from "@/navigation";
 import { colors } from "@/styles";
-import { TodoData, type ToDoDataProps } from "@/constants/TodoData";
+import { randomToDo } from "@/utils/randomToDo";
 
+type ToDoItem = {|
+  id: string,
+  title: string,
+  body: string,
+  isDone: boolean,
+|};
 type Props = {
   route: {|
     key: string,
     name: string,
     params: {|
-      handleAddItem: ({|
-        id: string,
-        title: string,
-        body: string,
-        isDone: boolean,
-      |}) => mixed,
-      handleLoadMockData: (Array<ToDoDataProps>) => mixed,
+      handleAddItem: (ToDoItem) => mixed,
+      handleLoadMockData: (Array<ToDoItem>) => mixed,
       handleClearData: () => mixed,
     |},
   |},
@@ -81,6 +82,7 @@ export function AddTaskScreen({ route }: Props) {
         <TouchableOpacity
           style={[styles.button, { backgroundColor: colors.softGray }]}
           onPress={() => {
+            const TodoData = randomToDo(20);
             route?.params?.handleLoadMockData(TodoData);
             navigation.goBack();
           }}>
