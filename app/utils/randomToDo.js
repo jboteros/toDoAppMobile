@@ -54,7 +54,7 @@ export const randomToDo = (n: number) => {
   for (let i = 0; i < n; i++) {
     const title = capitalizeFirstLetter(randomWord(actions));
     data.push({
-      id: new Date().getTime().toString(),
+      id: `${i} ${new Date().getTime().toString()}`,
       title,
       body: title + " " + randomWord(bridges) + " " + randomWord(targets),
       isDone: false,
